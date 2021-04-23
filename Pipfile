@@ -5,8 +5,11 @@ name = "pypi"
 
 [packages]
 paragon = {editable = true, path = "."}
+click = "*"
+progress = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.8"
