@@ -1,5 +1,5 @@
 import click
-from paragon.benchmark import Benchmark
+from paragon.benchmark import Paragon
 from paragon.utils import Utils
 
 
@@ -12,7 +12,7 @@ def cli(code, accuracy):
     for i in range(len(code)):
         click.secho(f"Benchmark #{i + 1}", fg="white", bold=True)
         try:
-            Benchmark.bench(code[i], accuracy)
+            Paragon.bench(code[i], accuracy)
         except Exception as e:
             Utils.reset_stdout()
             click.echo(f"Error: {e}", err=True)

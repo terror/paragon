@@ -1,6 +1,6 @@
 a = 2
 b = 12
-for i in range(100000):
+for i in range(20000):
     x = a * b + i
     z = []
     for j in range(100):
