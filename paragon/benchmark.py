@@ -7,6 +7,7 @@ from paragon.animate import Animate
 
 
 class Paragon:
+    """handles code benchmarking"""
     @staticmethod
     def bench(code: str, accuracy: int):
         """benchmark function

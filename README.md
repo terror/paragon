@@ -4,7 +4,7 @@
   A tiny command line benchmarking utility (and a python library!)
 </p>
 
-## Features
+## Features [WIP]
 - Statistical analysis
 - Cool progress bars
 - Python library

@@ -1,16 +1,18 @@
 [[source]]
-url = "https://pypi.org/simple"
+name       = "pypi"
+url        = "https://pypi.org/simple"
 verify_ssl = true
-name = "pypi"
 
 [packages]
-paragon = {editable = true, path = "."}
-click = "*"
+click    = "*"
+paragon  = {editable = true, path = "."}
 progress = "*"
 
 [dev-packages]
-black = "*"
+black  = "*"
 pylint = "*"
+pytest = "*"
+twine  = "*"
 
 [requires]
 python_version = "3.8"
