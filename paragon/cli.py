@@ -44,7 +44,7 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
     for val in code:
         click.secho(f"Benchmark #{current_benchmark}", fg="white", bold=True)
         try:
-            Paragon.bench(val, accuracy)
+            Paragon.bench(code=val, accuracy=accuracy)
         except (NameError, SyntaxError) as error:
             click.echo(f"Error: {error}", err=True)
         current_benchmark += 1
@@ -59,7 +59,7 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
                 continue
 
             try:
-                Paragon.bench(res, accuracy)
+                Paragon.bench(code=res, accuracy=accuracy)
             except (NameError, SyntaxError) as error:
                 click.echo(f"Error: {error}", err=True)
 
@@ -68,7 +68,7 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
     if output:
         print(output)
 
-    print(f"\n✨ Done in {start.diff()} s ✨")
+    print(f"✨ Done in {start.diff()} s ✨")
 
 
 if __name__ == "__main__":

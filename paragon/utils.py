@@ -31,10 +31,10 @@ class Utils:
         return (open(file, "r").read(), True)
 
     @staticmethod
-    def run_once(code):
+    def run_once(code, env: object = None):
         """run code once to make sure it's valid"""
         try:
-            exec(code, globals(), globals())
+            exec(code, globals(), env or globals())
             return (None, True)
         except (NameError, SyntaxError) as error:
             Utils.reset_stdout()
