@@ -1,5 +1,5 @@
-import time
-import sys
+"""all benchmark related logic"""
+
 from paragon.stats import Stats
 from paragon.utils import Utils
 from paragon.mark import Mark
@@ -8,7 +8,12 @@ from paragon.animate import Animate
 
 class Paragon:
     @staticmethod
-    def bench(code, accuracy):
+    def bench(code: str, accuracy: int):
+        """benchmark function
+
+        :param code: code to benchmark
+        :accuracy: number of iterations
+        """
         # don't need stdout
         Utils.redirect_stdout()
 

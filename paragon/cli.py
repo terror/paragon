@@ -1,3 +1,4 @@
+"""entry point for the paragon CLI."""
 import click
 from paragon.benchmark import Paragon
 from paragon.utils import Utils
@@ -8,11 +9,16 @@ from paragon.utils import Utils
 @click.option(
     "--accuracy", "-a", required=False, help="Number of iterations", default=1
 )
-def cli(code, accuracy):
-    for i in range(len(code)):
-        click.secho(f"Benchmark #{i + 1}", fg="white", bold=True)
+def cli(code: str, accuracy: int):
+    """entry point for the paragon CLI.
+
+    :param code: the code to benchmark
+    :param accuracy: number of iterations
+    """
+    for idx, val in enumerate(code):
+        click.secho(f"Benchmark #{idx + 1}", fg="white", bold=True)
         try:
-            Paragon.bench(code[i], accuracy)
+            Paragon.bench(val, accuracy)
         except Exception as e:
             Utils.reset_stdout()
             click.echo(f"Error: {e}", err=True)
