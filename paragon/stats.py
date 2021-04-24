@@ -1,5 +1,6 @@
 """all statistics related logic"""
 import click
+from paragon.utils import Utils
 
 
 class Stats:
@@ -28,6 +29,8 @@ class Stats:
 
     def output(self):
         """prints stats to stdout"""
+        Utils.reset_stdout()
+
         print(
             "\nTime ({} \xB1 {}): {} s \xB1 {} s.".format(
                 click.style("mean", fg="green"),
@@ -36,6 +39,7 @@ class Stats:
                 click.style("{:.2f}".format(self.standard_deviation()), fg="green"),
             )
         )
+
         print(
             "Range ({} ... {}): {} s ... {} s.\n".format(
                 click.style("min", fg="blue"),

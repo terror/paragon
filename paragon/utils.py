@@ -1,4 +1,6 @@
 """all utility related logic"""
+# pylint: disable = exec-used
+
 import os
 import sys
 
@@ -27,3 +29,13 @@ class Utils:
             return ("File must be a python file.", False)
 
         return (open(file, "r").read(), True)
+
+    @staticmethod
+    def run_once(code):
+        """run code once to make sure it's valid"""
+        try:
+            exec(code, globals(), globals())
+            return (None, True)
+        except (NameError, SyntaxError) as error:
+            Utils.reset_stdout()
+            return (error, False)

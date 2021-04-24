@@ -21,11 +21,9 @@ class Paragon:
         Utils.redirect_stdout()
 
         # run once to make sure it's valid python
-        try:
-            exec(code, globals(), globals())
-        except (NameError, SyntaxError) as error:
-            Utils.reset_stdout()
-            raise error
+        err, status = Utils.run_once(code)
+        if not status:
+            raise err
 
         mark, animate, times = Mark(), Animate(accuracy), []
         for _ in range(accuracy):
@@ -34,8 +32,6 @@ class Paragon:
             times.append(mark.diff())
             mark.reset()
 
+        # cleanup animation and output stats
         animate.done()
-        Utils.reset_stdout()
-
-        stats = Stats(times)
-        stats.output()
+        Stats(times).output()

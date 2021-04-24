@@ -2,7 +2,7 @@
 # pylint: disable = no-value-for-parameter
 from typing import List
 import click
-from paragon.benchmark import Paragon
+from paragon import Paragon
 from paragon.mark import Mark
 from paragon.utils import Utils
 
