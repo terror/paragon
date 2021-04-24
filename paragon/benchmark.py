@@ -23,7 +23,7 @@ class Paragon:
         # run once to make sure it's valid python
         try:
             exec(code)
-        except SyntaxError as error:
+        except (NameError, SyntaxError) as error:
             Utils.reset_stdout()
             raise error
 

@@ -8,8 +8,11 @@ clean:
 publish:
   twine upload dist/*
 
-sample *name:
-  python3 paragon "$(cat ./examples/{{name}}.py)" -a 20
+one *name:
+  python3 paragon -f ./examples/{{name}}.py -a 20
+
+many:
+  python3 paragon -f ./examples/math.py -f ./examples/hello_world.py -a 20
 
 lint:
   pylint paragon
