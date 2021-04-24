@@ -52,12 +52,12 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
     if len(files):
         for file in files:
             res, status = Utils.verify_file(file)
+            click.secho(f"Benchmark #{current_benchmark}", fg="white", bold=True)
 
             if not status:
-                click.echo(res, err=True)
-                return
+                click.echo(res + "\n", err=True)
+                continue
 
-            click.secho(f"Benchmark #{current_benchmark}", fg="white", bold=True)
             try:
                 Paragon.bench(res, accuracy)
             except (NameError, SyntaxError) as error:
@@ -68,7 +68,7 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
     if output:
         print(output)
 
-    print(f"✨ Done in {start.diff()} s ✨")
+    print(f"\n✨ Done in {start.diff()} s ✨")
 
 
 if __name__ == "__main__":

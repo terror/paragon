@@ -1,4 +1,5 @@
 """all statistics related logic"""
+import click
 
 
 class Stats:
@@ -28,12 +29,18 @@ class Stats:
     def output(self):
         """prints stats to stdout"""
         print(
-            "\nTime (mean \xB1 o): {:.2f} s \xB1 {:2f} s.".format(
-                self.avg, self.standard_deviation()
+            "\nTime ({} \xB1 {}): {} s \xB1 {} s.".format(
+                click.style("mean", fg="green"),
+                click.style("\u03C3", fg="green"),
+                click.style("{:.2f}".format(self.avg), fg="green"),
+                click.style("{:.2f}".format(self.standard_deviation()), fg="green"),
             )
         )
         print(
-            "Range (min ... max): {:.2f} s ... {:.2f} s.\n".format(
-                self.range[0], self.range[1]
+            "Range ({} ... {}): {} s ... {} s.\n".format(
+                click.style("min", fg="blue"),
+                click.style("max", fg="red"),
+                click.style("{:.2f}".format(self.range[0]), fg="blue"),
+                click.style("{:.2f}".format(self.range[1]), fg="red"),
             )
         )

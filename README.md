@@ -5,11 +5,11 @@
   <img src="https://github.com/terror/paragon/actions/workflows/ci.yml/badge.svg"/>
 </p>
 
-## Features [WIP]
+## Features
 - Statistical analysis
 - Cool progress bars
 - Python library
-- Export results to various file formats
+- Export results to various file formats (todo)
 
 ## Usage
 

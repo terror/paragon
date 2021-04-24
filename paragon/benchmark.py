@@ -22,14 +22,14 @@ class Paragon:
 
         # run once to make sure it's valid python
         try:
-            exec(code)
+            exec(code, globals(), globals())
         except (NameError, SyntaxError) as error:
             Utils.reset_stdout()
             raise error
 
         mark, animate, times = Mark(), Animate(accuracy), []
         for _ in range(accuracy):
-            exec(code)
+            exec(code, globals(), globals())
             animate.next()
             times.append(mark.diff())
             mark.reset()

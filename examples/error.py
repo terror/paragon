@@ -1,6 +1,5 @@
 def main():
-    psdkfj
-    printf("hello, world")
-
+    error!
+    print("hello, world")
 
 main()
