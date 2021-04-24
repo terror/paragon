@@ -18,3 +18,7 @@ You can install the command line utility via pip:
 ```bash
 $ pip install paragon
 ```
+
+## Demo
+
+[![asciicast](https://asciinema.org/a/fC4GTTlbRlTSUqAn7qQN20fTE.svg)](https://asciinema.org/a/fC4GTTlbRlTSUqAn7qQN20fTE)
