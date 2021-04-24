@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="paragon",
-    version="0.0.1",
+    version="0.0.2",
     author="Liam Scalzulli",
     author_email="liamscalzulli@gmail.com",
     description=("A tiny command line benchmarking utility"),
@@ -24,6 +24,7 @@ setup(
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
     ],
+    install_requires=["click", "progress"],
     entry_points={"console_scripts": ["paragon = paragon.cli:cli"]},
     python_requires=">=3.7",
 )
