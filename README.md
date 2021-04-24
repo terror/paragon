@@ -1,7 +1,8 @@
 ## <p align='center'>paragon</p>
 
 <p align='center'>
-  A tiny command line benchmarking utility (and a python library!)
+  A tiny command line benchmarking utility (and a python library!)<br/><br/>
+  <img src="https://github.com/terror/paragon/actions/workflows/ci.yml/badge.svg"/>
 </p>
 
 ## Features [WIP]
