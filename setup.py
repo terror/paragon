@@ -22,7 +22,7 @@ setup(
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
-        "License :: OSI Approved :: MIT License"
+        "License :: OSI Approved :: MIT License",
     ],
     entry_points={"console_scripts": ["paragon = paragon.cli:cli"]},
     python_requires=">=3.7",

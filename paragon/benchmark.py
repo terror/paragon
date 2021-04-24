@@ -1,4 +1,5 @@
 """all benchmark related logic"""
+# pylint: disable = exec-used
 
 from paragon.stats import Stats
 from paragon.utils import Utils
@@ -8,6 +9,7 @@ from paragon.animate import Animate
 
 class Paragon:
     """handles code benchmarking"""
+
     @staticmethod
     def bench(code: str, accuracy: int):
         """benchmark function
@@ -21,20 +23,19 @@ class Paragon:
         # run once to make sure it's valid python
         try:
             exec(code)
-        except Exception as e:
-            raise e
+        except SyntaxError as error:
+            Utils.reset_stdout()
+            raise error
 
-        start = Mark()
-        times, prev = [], None
-        animate = Animate(accuracy)
-
+        mark, animate, times = Mark(), Animate(accuracy), []
         for _ in range(accuracy):
             exec(code)
             animate.next()
-            times.append(prev.diff() if prev is not None else start.diff())
-            prev = Mark()
+            times.append(mark.diff())
+            mark.reset()
 
         animate.done()
         Utils.reset_stdout()
+
         stats = Stats(times)
         stats.output()

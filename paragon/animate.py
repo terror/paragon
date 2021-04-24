@@ -6,6 +6,7 @@ from progress.spinner import PixelSpinner
 
 class Bar(IncrementalBar):
     """custom progress bar"""
+
     message = "Status"
     suffix = "%(percent).1f%% - ETA %(eta)ds"
 

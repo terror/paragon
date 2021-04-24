@@ -1,5 +1,6 @@
 """all statistics related logic"""
 
+
 class Stats:
     """handles statistics compute and output"""
 
@@ -16,12 +17,23 @@ class Stats:
         """returns the range (min, max) of all times"""
         return (min(self.times), max(self.times))
 
+    def standard_deviation(self):
+        """calculates the standard deviation from the mean"""
+        return round(
+            (sum([((time - self.avg) ** 2) for time in self.times]) / len(self.times))
+            ** 0.5,
+            10,
+        )
+
     def output(self):
         """prints stats to stdout"""
-        print("\n✨ Finished in {:.2f} seconds. ✨".format(sum(self.times)))
-        print("✨ Average time: {:.2f} seconds. ✨".format(self.avg))
         print(
-            "✨ Range: {:.2f} ... {:.2f} seconds. ✨\n".format(
+            "\nTime (mean \xB1 o): {:.2f} s \xB1 {:2f} s.".format(
+                self.avg, self.standard_deviation()
+            )
+        )
+        print(
+            "Range (min ... max): {:.2f} s ... {:.2f} s.\n".format(
                 self.range[0], self.range[1]
             )
         )
