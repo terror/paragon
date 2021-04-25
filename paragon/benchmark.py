@@ -1,6 +1,7 @@
 """all benchmark related logic"""
 # pylint: disable = exec-used
 
+import sys
 import click
 from paragon.stats import Stats
 from paragon.utils import Utils
@@ -27,18 +28,23 @@ class Paragon:
 
                 start, func_name = Mark(), func.__name__
 
-                click.secho(
-                    "Benchmark: {}".format(name or func_name),
-                    fg="white",
-                    bold=True,
-                )
+                try:
+                    click.secho(
+                        "Benchmark: {}".format(name or func_name),
+                        fg="white",
+                        bold=True,
+                    )
+                except AttributeError:
+                    click.secho("Make sure you wrap your recursive functions!\n", err=True)
+                    sys.exit(1)
 
                 # gather locals and build code string
-                env = {func_name: func, args: args}
+                env = {func_name: func}
                 code = f"{func_name}(*{args})"
 
                 # run bench
                 Paragon.bench(code=code, env=env, accuracy=accuracy)
+
                 print(f"✨ Done in {round(start.diff(), 2)} s ✨\n")
 
                 return func(*args)
@@ -64,8 +70,6 @@ class Paragon:
             raise err
 
         mark, animate, times = Mark(), Animate(accuracy), []
-
-        # begin cycle
         for _ in range(accuracy):
             exec(code, globals(), env or globals())
             animate.next()

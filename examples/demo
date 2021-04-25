@@ -1,0 +1,6 @@
+# demo passing in a code string and multiple files
+python3 ../paragon "for i in range(2500): print(i ** i)" \
+                -f ./comp.py \
+                -f ./hello.py \
+                -f ./sort.py  \
+                -a 20
