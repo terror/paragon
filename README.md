@@ -7,7 +7,7 @@
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/fC4GTTlbRlTSUqAn7qQN20fTE.svg)](https://asciinema.org/a/fC4GTTlbRlTSUqAn7qQN20fTE)
+[![asciicast](https://asciinema.org/a/zlYbpkGncIkB01vqU1BnEh5T0.svg)](https://asciinema.org/a/zlYbpkGncIkB01vqU1BnEh5T0)
 
 ## Features
 - Statistical analysis
@@ -62,6 +62,7 @@ n = 1000000
 def main():
     """entry point"""
     fizzbuzz(n)
+    fib_wrapper(30)
 
 @Paragon.benchmark(name="FizzBuzz!", accuracy=20)
 def fizzbuzz(n):
@@ -71,6 +72,13 @@ def fizzbuzz(n):
             range(1, n),
         )
     )
+
+# You must wrap your recursive functions
+@Paragon.benchmark(name="Fibonacci!", accuracy=20)
+def fib_wrapper(n):
+    def fib(n):
+        return 1 if n in [0, 1] else fib(n - 1) + fib(n - 2)
+    fib(n)
 
 if __name__ == "__main__":
     main()
