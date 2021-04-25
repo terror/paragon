@@ -50,6 +50,20 @@ Providing a python file:
 $ paragon -f /path/to/file.py
 ```
 
+### Exporting results
+
+You can use the -o option to specify an ouput file which will receive the results. Paragon currently supports
+Markdown, CSV and JSON file formats.
+
+For instance, specifying a Markdown output file will yield this result:
+
+| Program | Average [s] | Min [s] | Max [s] |
+|---|---|---|---|
+| `for i in range(2500): print(i ** i)` | 102.45 | 97.6 | 114.0 |
+| `comp` | 230.27 | 226.6 | 236.6 |
+| `hello` | 10.23 | 10.1 | 10.5 |
+| `sort` | 429.49 | 421.8 | 438.2 |
+
 ### Library
 
 Example:
@@ -83,3 +97,7 @@ def fib_wrapper(n):
 if __name__ == "__main__":
     main()
 ```
+
+## Further Ramblings
+
+Paragon is heavily inspired by the shell benchmarking tool [hyperfine](https://github.com/sharkdp/hyperfine). Although currently less mature, it has room to grow. For now, it is a simple tool that can be used to run quick and easy benchmarks for Python code with minimal setup.
