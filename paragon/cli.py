@@ -1,5 +1,6 @@
 """entry point for the paragon CLI."""
 # pylint: disable = no-value-for-parameter
+
 from typing import List
 import click
 from paragon import Paragon
@@ -41,34 +42,47 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
         return
 
     start, current_benchmark = Mark(), 1
+
+    if code:
+        bench_code(code, current_benchmark, accuracy)
+
+    if files:
+        bench_files(files, current_benchmark, accuracy)
+
+    if output:
+        print(output)
+
+    print(f"✨ Done in {start.diff()} s ✨")
+
+
+def bench_code(code: List[str], current_benchmark: int, accuracy: int):
+    """runs benches for all passed in code"""
     for val in code:
-        click.secho(f"Benchmark #{current_benchmark}", fg="white", bold=True)
+        click.secho(f"Benchmark #{current_benchmark}: {val}", fg="white", bold=True)
         try:
             Paragon.bench(code=val, accuracy=accuracy)
         except (NameError, SyntaxError) as error:
             click.echo(f"Error: {error}", err=True)
         current_benchmark += 1
 
-    if len(files):
-        for file in files:
-            res, status = Utils.verify_file(file)
-            click.secho(f"Benchmark #{current_benchmark}", fg="white", bold=True)
 
-            if not status:
-                click.echo(res + "\n", err=True)
-                continue
+def bench_files(files: List[str], current_benchmark: int, accuracy: int):
+    """runs benches for all passed in files"""
+    for file in files:
+        res, name, status = Utils.verify_file(file)
 
-            try:
-                Paragon.bench(code=res, accuracy=accuracy)
-            except (NameError, SyntaxError) as error:
-                click.echo(f"Error: {error}", err=True)
+        click.secho(f"Benchmark #{current_benchmark}: {name}", fg="white", bold=True)
 
-            current_benchmark += 1
+        if not status:
+            click.echo(res + "\n", err=True)
+            continue
 
-    if output:
-        print(output)
+        try:
+            Paragon.bench(code=res, accuracy=accuracy)
+        except (NameError, SyntaxError) as error:
+            click.echo(f"Error: {error}", err=True)
 
-    print(f"✨ Done in {start.diff()} s ✨")
+        current_benchmark += 1
 
 
 if __name__ == "__main__":

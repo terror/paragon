@@ -19,16 +19,22 @@ class Utils:
         sys.stdout = redirect_value
 
     @staticmethod
-    def verify_file(file):
-        """verifies a python file to benchmark"""
-        if not os.path.exists(file):
-            return ("File does not exist.", False)
+    def get_filename_ext(path: str):
+        """returns the name and extension of the last part in the path"""
+        parts, ext = os.path.splitext(path)
+        return (parts.split("/")[-1], ext)
 
-        _, ext = os.path.splitext(file)
+    @staticmethod
+    def verify_file(path):
+        """verifies a python file to benchmark"""
+        if not os.path.exists(path):
+            return ("File does not exist.", "", False)
+
+        name, ext = Utils.get_filename_ext(path)
         if ext != ".py":
             return ("File must be a python file.", False)
 
-        return (open(file, "r").read(), True)
+        return (open(path, "r").read(), name, True)
 
     @staticmethod
     def run_once(code, env: object = None):

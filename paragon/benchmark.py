@@ -42,9 +42,7 @@ class Paragon:
                 print(f"✨ Done in {start.diff()} s ✨\n")
 
                 return func(*args)
-
             return wrap
-
         return inner
 
     @staticmethod
