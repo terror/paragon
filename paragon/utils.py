@@ -45,3 +45,9 @@ class Utils:
         except (NameError, SyntaxError) as error:
             Utils.reset_stdout()
             return (error, False)
+
+    @staticmethod
+    def format_to_int(fmt: str):
+        """converts a file format to integer"""
+        table = {".md": 1, ".json": 2, ".csv": 3}
+        return table[fmt]

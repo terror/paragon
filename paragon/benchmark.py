@@ -12,6 +12,8 @@ from paragon.animate import Animate
 class Paragon:
     """handles code benchmarking"""
 
+    results = []
+
     @staticmethod
     def benchmark(name: str = None, accuracy: int = 1):
         """benchmark decorator
@@ -35,7 +37,9 @@ class Paragon:
                         bold=True,
                     )
                 except AttributeError:
-                    click.secho("Make sure you wrap your recursive functions!\n", err=True)
+                    click.secho(
+                        "Make sure you wrap your recursive functions!\n", err=True
+                    )
                     sys.exit(1)
 
                 # gather locals and build code string
@@ -43,24 +47,35 @@ class Paragon:
                 code = f"{func_name}(*{args})"
 
                 # run bench
-                Paragon.bench(code=code, env=env, accuracy=accuracy)
+                Paragon.bench(data=(code, func_name, None), env=env, accuracy=accuracy)
 
                 print(f"✨ Done in {round(start.diff(), 2)} s ✨\n")
 
                 return func(*args)
+
             return wrap
+
         return inner
 
     @staticmethod
-    def bench(code: str, env: object = None, accuracy: int = 1):
+    def bench(data: tuple, env: object = None, accuracy: int = 1):
         """benchmark function
         - benches passed in code, taking in optional locals and number
         of iterations
 
-        :param code: code to benchmark
+        :param data: ( code: str, name: str, iteration: int )
         :accuracy: number of iterations
         :env: locals
         """
+        code, name, iteration = data
+
+        if iteration:
+            click.secho(
+                f"Benchmark #{iteration}: {name}",
+                fg="white",
+                bold=True,
+            )
+
         # don't need stdout
         Utils.redirect_stdout()
 
@@ -78,4 +93,4 @@ class Paragon:
 
         # cleanup animation and output stats
         animate.done()
-        Stats(times).output()
+        Paragon.results.append(Stats(times, name).output())

@@ -6,8 +6,9 @@ from paragon.utils import Utils
 class Stats:
     """handles statistics compute and output"""
 
-    def __init__(self, times):
+    def __init__(self, times, name):
         self.times = times
+        self.name = name
 
     @property
     def avg(self):
@@ -17,7 +18,7 @@ class Stats:
     @property
     def range(self):
         """returns the range (min, max) of all times"""
-        return (min(self.times) * 1000, max(self.times) * 1000)
+        return (round(min(self.times) * 1000, 2), round(max(self.times) * 1000, 2))
 
     def standard_deviation(self):
         """calculates the standard deviation from the mean"""
@@ -51,3 +52,5 @@ class Stats:
                 click.style("{:.2f}".format(self.range[1]), fg="red"),
             )
         )
+
+        return {"average": self.avg, "range": self.range, "name": self.name}

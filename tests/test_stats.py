@@ -14,7 +14,7 @@ def test_mean():
     ]
 
     for entry, ans in times:
-        stats = Stats(entry)
+        stats = Stats(entry, "test")
         assert stats.avg == ans
 
 
@@ -30,7 +30,7 @@ def test_range():
     ]
 
     for entry, ans in ranges:
-        stats = Stats(entry)
+        stats = Stats(entry, "test")
         assert stats.range == ans
 
 
@@ -45,5 +45,5 @@ def test_standard_deviation():
     ]
 
     for entry, ans in deviations:
-        stats = Stats(entry)
+        stats = Stats(entry, "test")
         assert stats.standard_deviation() == ans
