@@ -41,7 +41,7 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
         click.echo("You must provide python code to benchmark.", err=True)
         return
 
-    start, current_benchmark = Mark(), 1
+    start, current_benchmark = Mark(), [1]
 
     if code:
         bench_code(code, current_benchmark, accuracy)
@@ -52,26 +52,32 @@ def cli(code: List[str], accuracy: int, files: List[str], output: str):
     if output:
         print(output)
 
-    print(f"✨ Done in {start.diff()} s ✨")
+    print("✨ Done in {:.2f} s ✨".format(start.diff()))
 
 
-def bench_code(code: List[str], current_benchmark: int, accuracy: int):
+def bench_code(code: List[str], current_benchmark: List[int], accuracy: int):
     """runs benches for all passed in code"""
     for val in code:
-        click.secho(f"Benchmark #{current_benchmark}: {val}", fg="white", bold=True)
+        click.secho(
+            "Benchmark #{}: {}".format(*current_benchmark, val), fg="white", bold=True
+        )
+
         try:
             Paragon.bench(code=val, accuracy=accuracy)
         except (NameError, SyntaxError) as error:
             click.echo(f"Error: {error}", err=True)
-        current_benchmark += 1
+
+        current_benchmark[0] += 1
 
 
-def bench_files(files: List[str], current_benchmark: int, accuracy: int):
+def bench_files(files: List[str], current_benchmark: List[int], accuracy: int):
     """runs benches for all passed in files"""
     for file in files:
         res, name, status = Utils.verify_file(file)
 
-        click.secho(f"Benchmark #{current_benchmark}: {name}", fg="white", bold=True)
+        click.secho(
+            "Benchmark #{}: {}".format(*current_benchmark, name), fg="white", bold=True
+        )
 
         if not status:
             click.echo(res + "\n", err=True)
@@ -82,7 +88,7 @@ def bench_files(files: List[str], current_benchmark: int, accuracy: int):
         except (NameError, SyntaxError) as error:
             click.echo(f"Error: {error}", err=True)
 
-        current_benchmark += 1
+        current_benchmark[0] += 1
 
 
 if __name__ == "__main__":

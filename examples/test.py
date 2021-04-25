@@ -1,12 +1,9 @@
-"""testing library functionality"""
-
 from paragon import Paragon
 
 n = 1000000
 
 
 def main():
-    """entry point"""
     math(n)
     fizzbuzz(n)
 

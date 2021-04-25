@@ -39,7 +39,7 @@ class Paragon:
 
                 # run bench
                 Paragon.bench(code=code, env=env, accuracy=accuracy)
-                print(f"✨ Done in {start.diff()} s ✨\n")
+                print(f"✨ Done in {round(start.diff(), 2)} s ✨\n")
 
                 return func(*args)
             return wrap

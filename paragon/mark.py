@@ -11,11 +11,11 @@ class Mark:
 
     def __sub__(self, other):
         """subtract two marks counts"""
-        return round(self.time - other.time, 2)
+        return round(self.time - other.time, 4)
 
     def diff(self):
         """diff's the current counter with init's counter"""
-        return round(time.perf_counter() - self.time, 2)
+        return round(time.perf_counter() - self.time, 4)
 
     def reset(self):
         """reset the marks counter"""
