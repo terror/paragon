@@ -45,14 +45,14 @@ class Exporter:
             json.dump(results, out, indent=4)
 
         if fmt == Format.MARKDOWN:
-            table = "| Program | Average [s] | Min [s] | Max [s] |\n|---|---|---|---|\n"
+            table = "| Program | Average [ms] | Min [ms] | Max [ms] |\n|---|---|---|---|\n"
             for key, val in results.items():
                 table += f"| `{key}` | {val['average']} | {val['range'][0]} | {val['range'][1]} |\n"
             out.write(table)
 
         if fmt == Format.CSV:
             writer = csv.DictWriter(
-                out, fieldnames=["Program", "Average [s]", "Min [s]", "Max [s]"]
+                out, fieldnames=["Program", "Average [ms]", "Min [ms]", "Max [ms]"]
             )
 
             writer.writeheader()
@@ -61,8 +61,8 @@ class Exporter:
                 writer.writerow(
                     {
                         "Program": key,
-                        "Average [s]": val["average"],
-                        "Min [s]": val["range"][0],
-                        "Max [s]": val["range"][1],
+                        "Average [ms]": val["average"],
+                        "Min [ms]": val["range"][0],
+                        "Max [ms]": val["range"][1],
                     }
                 )

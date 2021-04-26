@@ -57,12 +57,12 @@ Markdown, CSV and JSON file formats.
 
 For instance, specifying a Markdown output file will yield this result:
 
-| Program | Average [s] | Min [s] | Max [s] |
-|---|---|---|---|
-| `for i in range(2500): print(i ** i)` | 102.45 | 97.6 | 114.0 |
-| `comp` | 230.27 | 226.6 | 236.6 |
-| `hello` | 10.23 | 10.1 | 10.5 |
-| `sort` | 429.49 | 421.8 | 438.2 |
+| Program                               | Average [ms] | Min [ms] | Max [ms] |
+|---------------------------------------|--------------|----------|----------|
+| `for i in range(2500): print(i ** i)` | 102.45       | 97.6     | 114.0    |
+| `comp`                                | 230.27       | 226.6    | 236.6    |
+| `hello`                               | 10.23        | 10.1     | 10.5     |
+| `sort`                                | 429.49       | 421.8    | 438.2    |
 
 ### Library
 
