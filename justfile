@@ -20,5 +20,8 @@ many:
 lint:
   pylint paragon
 
+test:
+  pytest
+
 fmt:
-  black . --exclude tests
+  yapf --in-place --recursive **/*.py

@@ -6,63 +6,53 @@ import click
 from paragon import Paragon
 from paragon.utils import Utils
 
-
 class Format(enum.Enum):
-    """file types as enums"""
+  """file types as enums"""
 
-    MARKDOWN = 1
-    JSON = 2
-    CSV = 3
-
+  MARKDOWN = 1
+  JSON = 2
+  CSV = 3
 
 class Exporter:
-    """handles writing to various file formats"""
+  """handles writing to various file formats"""
+  @staticmethod
+  def export_results(path: str):
+    """writes results to a file"""
+    _, ext = Utils.get_filename_ext(path)
 
-    @staticmethod
-    def export_results(path: str):
-        """writes results to a file"""
-        _, ext = Utils.get_filename_ext(path)
+    if ext not in [".md", ".json", ".csv"]:
+      click.echo("Output file must be of type markdown, csv or json.\n", err=True)
+      return
 
-        if ext not in [".md", ".json", ".csv"]:
-            click.echo("Output file must be of type markdown, csv or json.\n", err=True)
-            return
+    with open(path, "w+") as out:
+      Exporter.write(Format(Utils.format_to_int(ext)), out)
 
-        with open(path, "w+") as out:
-            Exporter.write(Format(Utils.format_to_int(ext)), out)
+    click.echo(f"Successfully exported results to {path}\n")
 
-        click.echo(f"Successfully exported results to {path}\n")
+  @staticmethod
+  def write(fmt: Format, out: str):
+    """builds and writes different outputs based on file format"""
 
-    @staticmethod
-    def write(fmt: Format, out: str):
-        """builds and writes different outputs based on file format"""
+    results = {result["name"]: {"average": result["average"], "range": result["range"]} for result in Paragon.results}
 
-        results = {
-            result["name"]: {"average": result["average"], "range": result["range"]}
-            for result in Paragon.results
-        }
+    if fmt == Format.JSON:
+      json.dump(results, out, indent=4)
 
-        if fmt == Format.JSON:
-            json.dump(results, out, indent=4)
+    if fmt == Format.MARKDOWN:
+      table = "| Program | Average [ms] | Min [ms] | Max [ms] |\n|---|---|---|---|\n"
+      for key, val in results.items():
+        table += f"| `{key}` | {val['average']} | {val['range'][0]} | {val['range'][1]} |\n"
+      out.write(table)
 
-        if fmt == Format.MARKDOWN:
-            table = "| Program | Average [ms] | Min [ms] | Max [ms] |\n|---|---|---|---|\n"
-            for key, val in results.items():
-                table += f"| `{key}` | {val['average']} | {val['range'][0]} | {val['range'][1]} |\n"
-            out.write(table)
+    if fmt == Format.CSV:
+      writer = csv.DictWriter(out, fieldnames=["Program", "Average [ms]", "Min [ms]", "Max [ms]"])
 
-        if fmt == Format.CSV:
-            writer = csv.DictWriter(
-                out, fieldnames=["Program", "Average [ms]", "Min [ms]", "Max [ms]"]
-            )
+      writer.writeheader()
 
-            writer.writeheader()
-
-            for key, val in results.items():
-                writer.writerow(
-                    {
-                        "Program": key,
-                        "Average [ms]": val["average"],
-                        "Min [ms]": val["range"][0],
-                        "Max [ms]": val["range"][1],
-                    }
-                )
+      for key, val in results.items():
+        writer.writerow({
+            "Program": key,
+            "Average [ms]": val["average"],
+            "Min [ms]": val["range"][0],
+            "Max [ms]": val["range"][1],
+        })

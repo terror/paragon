@@ -10,10 +10,10 @@ paragon  = {editable = true, path = "."}
 progress = "*"
 
 [dev-packages]
-black  = "*"
 pylint = "*"
 pytest = "*"
 twine  = "*"
+yapf   = "*"
 
 [requires]
 python_version = "3.8"
